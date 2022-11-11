@@ -20,7 +20,7 @@
         methods: {
             showInfo() {
                 console.log('1111')
-            }
+            },
         },
     }
 </script>
