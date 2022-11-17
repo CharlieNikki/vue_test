@@ -1,6 +1,11 @@
 <template>
     <div class="todo-header">
-        <input type="text" placeholder="请输入你的任务名称，按回车确认" @keyup.enter="add"/>
+        <input
+            type="text"
+            placeholder="请输入你的任务名称，按回车确认"
+            v-model="title"
+            @keyup.enter="add"
+        />
     </div>
 </template>
 
@@ -8,15 +13,27 @@
     import {nanoid} from 'nanoid'
     export default {
         name: 'MyHeader',
+        data() {
+            return {
+                title: '',
+            }
+        },
         methods: {
-            add(e) {
+            add() {
+                if (!this.title.trim()) {
+                    this.title = ''
+                    return alert('请输入内容！！')
+                }
                 const todoObj = {
                     id: nanoid(),
-                    title: e.target.value,
-                    done: false
+                    title: this.title,
+                    done: false,
                 }
-                console.log(todoObj)
-            }
+                // 触发自定义事件addTodo并将数据todoObj传入
+                this.$emit('addTodo', todoObj)
+                // 清空输入框的内容
+                this.title = ''
+            },
         }
     }
 </script>
